@@ -15,11 +15,27 @@ class GoalViewController: UIViewController {
     
     @IBOutlet weak var goalTableView: UITableView!
     
+    var goals: [Goal] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         goalTableView.delegate = self
         goalTableView.dataSource = self
         goalTableView.isHidden = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchGoals { (complete) in
+            if complete {
+                if goals.count > 0 {
+                    goalTableView.isHidden = false
+                } else {
+                    goalTableView.isHidden = true
+                }
+            }
+        }
+        goalTableView.reloadData()
     }
     
     @IBAction func addGoalButtonWasTapped(_ sender: Any) {
