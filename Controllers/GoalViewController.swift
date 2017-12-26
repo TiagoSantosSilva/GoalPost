@@ -24,8 +24,7 @@ class GoalViewController: UIViewController {
         goalTableView.isHidden = false
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func fetchCoreDataObjects() {
         self.fetchGoals { (complete) in
             if complete {
                 if goals.count > 0 {
@@ -35,6 +34,11 @@ class GoalViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchCoreDataObjects()
         goalTableView.reloadData()
     }
     
